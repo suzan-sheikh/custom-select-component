@@ -15,127 +15,137 @@ const CustomSelect = ({
   onSearchHandler,
 }) => {
   const [selectedValue, setSelectedValue] = useState(value || (isMulti ? [] : null));
-  const [availableOptions, setAvailableOptions] = useState(options);
-  const [isMenuOpen, setIsMenuOpen] = useState(true); // Open menu by default
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
   const inputRef = useRef(null);
+  const menuRef = useRef(null); // Reference to the menu container
+  const controlRef = useRef(null); // Reference to the control container
 
-  useEffect(() => {
-    if (onMenuOpen) {
-      onMenuOpen();
+  // Toggle menu open/close
+  const handleControlClick = () => {
+    if (!isDisabled) {
+      setIsMenuOpen(prev => !prev);
     }
-  }, [isMenuOpen, onMenuOpen]);
+  };
 
-  useEffect(() => {
-    // Update available options when selected items change
-    setAvailableOptions(
-      options.filter((opt) => !selectedValue.some((sel) => sel.value === opt.value))
-    );
-  }, [selectedValue, options]);
-
+  // Handle option selection
   const handleSelect = (option) => {
     if (isMulti) {
-      const newSelected = [...selectedValue, option];
-      setSelectedValue(newSelected);
-      setAvailableOptions(availableOptions.filter((opt) => opt.value !== option.value));
-      onChangeHandler(newSelected);
+      setSelectedValue(prev => {
+        const newSelection = [...prev, option];
+        onChangeHandler(newSelection);
+        return newSelection;
+      });
     } else {
       setSelectedValue(option);
-      setAvailableOptions(availableOptions.filter((opt) => opt.value !== option.value));
       onChangeHandler(option);
       setIsMenuOpen(false);
     }
   };
 
+  // Handle clear action
   const handleClear = (item) => {
     if (isMulti) {
-      const newSelected = selectedValue.filter((i) => i.value !== item.value);
-      setSelectedValue(newSelected);
-      setAvailableOptions([...availableOptions, item]);
-      onChangeHandler(newSelected);
+      setSelectedValue(prev => {
+        const newSelection = prev.filter(i => i.value !== item.value);
+        onChangeHandler(newSelection);
+        return newSelection;
+      });
     } else {
       setSelectedValue(null);
-      setAvailableOptions([...availableOptions, item]);
       onChangeHandler(null);
     }
-    setIsMenuOpen(true); // Reopen the menu when an item is cleared
+    setIsMenuOpen(true);
   };
 
+  // Handle search input change
   const handleSearch = (event) => {
     setSearchTerm(event.target.value);
-    if (onSearchHandler) {
-      onSearchHandler(event.target.value);
-    }
+    if (onSearchHandler) onSearchHandler(event.target.value);
   };
 
-  const filteredOptions = availableOptions.filter((option) =>
-    option.label.toLowerCase().includes(searchTerm.toLowerCase())
+  // Filter options based on search term and selected values
+  const filteredOptions = options.filter(option =>
+    option.label.toLowerCase().includes(searchTerm.toLowerCase()) &&
+    !selectedValue.some(sel => sel.value === option.value)
   );
 
-  const handleFocus = () => {
-    if (!isDisabled) {
-      setIsMenuOpen(true);
-    }
-  };
+  // Render options as list items
+  const renderOptions = (options) => options.map(option => (
+    <li
+      key={option.value}
+      className="kzui-select__option"
+      onClick={() => handleSelect(option)}
+    >
+      {option.label}
+    </li>
+  ));
 
-  const handleBlur = () => {
-    if (!isDisabled && !isMulti) {
-      setIsMenuOpen(false);
-    }
-  };
+  // Render grouped options
+  const renderGroupedOptions = () => options.map(group => (
+    <li key={group.label} className="kzui-select__group">
+      <div className="kzui-select__group-label">{group.label}</div>
+      <ul>
+        {renderOptions(group.options)}
+      </ul>
+    </li>
+  ));
 
-  const renderOptions = (options) => {
-    return options.map((option) => (
-      <li
-        key={option.value}
-        className="kzui-select__option"
-        onClick={() => handleSelect(option)}
-      >
-        {option.label}
-      </li>
-    ));
-  };
+  // Close menu when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (menuRef.current && !menuRef.current.contains(event.target) &&
+          controlRef.current && !controlRef.current.contains(event.target)) {
+        setIsMenuOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
+  // Open/close menu and invoke onMenuOpen callback when menu opens/closes
+  useEffect(() => {
+    if (onMenuOpen && isMenuOpen) onMenuOpen();
+  }, [isMenuOpen, onMenuOpen]);
 
   return (
     <div className={`kzui-select ${isDisabled ? 'kzui-select--disabled' : ''}`}>
       <div
         className="kzui-select__control"
-        onClick={() => !isDisabled && setIsMenuOpen(true)}
+        onClick={handleControlClick}
+        ref={controlRef}
       >
-        {selectedValue ? (
-          isMulti ? (
-            selectedValue.map((val) => (
-              <ul key={val.value} className="kzui-select__multi-value-container">
-                <li className="kzui-select__multi-value">
-                  {val.label}
-                </li>
-                {isClearable && (
-                  <button
-                    className="kzui-select__clear-btn"
-                    onClick={(e) => {
-                      e.stopPropagation(); // Prevent the click event from triggering the control click
-                      handleClear(val);
-                    }}
-                  >
-                    &times;
-                  </button>
-                )}
-              </ul>
-            ))
-          ) : (
-            <div className="kzui-select__value">{selectedValue.label}</div>
-          )
-        ) : (
+        {!selectedValue || (Array.isArray(selectedValue) && selectedValue.length === 0) ? (
           <div className="kzui-select__placeholder">{placeholder}</div>
+        ) : isMulti ? (
+          selectedValue.map(val => (
+            <div key={val.value} className="kzui-select__multi-value-container">
+              <span className="kzui-select__multi-value">{val.label}</span>
+              {isClearable && (
+                <button
+                  className="kzui-select__clear-btn"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleClear(val);
+                  }}
+                >
+                  &times;
+                </button>
+              )}
+            </div>
+          ))
+        ) : (
+          <div className="kzui-select__value">{selectedValue.label}</div>
         )}
-        {isClearable && !isMulti && selectedValue && (
+        {!isMulti && isClearable && selectedValue && (
           <button className="kzui-select__clear-btn" onClick={() => handleClear(selectedValue)}>
             &times;
           </button>
         )}
       </div>
       {isMenuOpen && (
-        <div className="kzui-select__menu">
+        <div className="kzui-select__menu" ref={menuRef}>
           {isSearchable && (
             <input
               type="text"
@@ -143,14 +153,16 @@ const CustomSelect = ({
               value={searchTerm}
               onChange={handleSearch}
               placeholder="Search..."
+              ref={inputRef}
             />
           )}
           <ul className="kzui-select__list">
-            {filteredOptions.length ? (
-              renderOptions(filteredOptions)
-            ) : (
-              <li className="kzui-select__no-options">No options available</li>
-            )}
+            {isGrouped
+              ? renderGroupedOptions()
+              : filteredOptions.length
+              ? renderOptions(filteredOptions)
+              : <li className="kzui-select__no-options">No options available</li>
+            }
           </ul>
         </div>
       )}

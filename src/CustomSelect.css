@@ -15,15 +15,10 @@
   padding: 8px;
   border: 1px solid #ccc;
   border-radius: 4px;
-  cursor: pointer;
   background-color: #fff;
 }
 
-.kzui-select__control:hover {
-  border-color: #999;
-}
-
-.kzui-select__value {
+.kzui-select__value, .kzui-select__placeholder {
   flex: 1;
 }
 
@@ -50,7 +45,6 @@
   max-height: 200px;
   overflow-y: auto;
   z-index: 10;
-  display: block; /* Ensure menu is always visible by default */
 }
 
 .kzui-select__search {
@@ -87,6 +81,16 @@
 
 .kzui-select__multi-value {
   margin-right: 4px;
+}
+
+.kzui-select__group {
+  margin-bottom: 8px;
+}
+
+.kzui-select__group-label {
+  font-weight: bold;
+  padding: 8px;
+  border-bottom: 1px solid #ccc;
 }
 
 .kzui-select__no-options {
