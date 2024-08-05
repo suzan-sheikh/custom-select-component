@@ -1,18 +1,9 @@
-import toast from "react-hot-toast";
+import AppComponent from '../AppComponent';
 
 const Main = () => {
-
-    const value = true;
-
-    const handleClick = () => {
-        if (value) {
-            toast.success('Successfully toasted!');
-        }
-    };
-
     return (
         <div>
-            <button onClick={handleClick}>Project Start</button>
+            <AppComponent/>
         </div>
     );
 };

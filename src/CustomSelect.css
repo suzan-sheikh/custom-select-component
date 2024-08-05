@@ -1,0 +1,95 @@
+.kzui-select {
+  position: relative;
+  font-family: Arial, sans-serif;
+}
+
+.kzui-select--disabled {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.kzui-select__control {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  cursor: pointer;
+  background-color: #fff;
+}
+
+.kzui-select__control:hover {
+  border-color: #999;
+}
+
+.kzui-select__value {
+  flex: 1;
+}
+
+.kzui-select__placeholder {
+  color: #aaa;
+}
+
+.kzui-select__clear-btn {
+  background: none;
+  border: none;
+  color: #999;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.kzui-select__menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  max-height: 200px;
+  overflow-y: auto;
+  z-index: 10;
+  display: block; /* Ensure menu is always visible by default */
+}
+
+.kzui-select__search {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-bottom: 8px;
+}
+
+.kzui-select__list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.kzui-select__option {
+  padding: 8px;
+  cursor: pointer;
+}
+
+.kzui-select__option:hover {
+  background-color: #f0f0f0;
+}
+
+.kzui-select__multi-value-container {
+  display: flex;
+  align-items: center;
+  background-color: #e0e0e0;
+  border-radius: 12px;
+  padding: 4px 8px;
+  margin: 2px;
+}
+
+.kzui-select__multi-value {
+  margin-right: 4px;
+}
+
+.kzui-select__no-options {
+  padding: 8px;
+  color: #666;
+}
