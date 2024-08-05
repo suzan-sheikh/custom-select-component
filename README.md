@@ -1,8 +1,31 @@
-# React + Vite
+# Job-Hunter-Server
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+**Live Link: [https://upwork-8699b.web.app](https://upwork-8699b.web.app)**
 
-Currently, two official plugins are available:
+**Client GitHub Link: [https://github.com/suzan-sheikh/Job-Hunter-Client](https://github.com/suzan-sheikh/Job-Hunter-Client)**
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Prerequisites:
+
+- Must have install Node in your local machine for run this project.
+- Must have Git for clone and push from GitHub.
+
+## Setup
+
+For initializing this project you have to use the command below:
+
+```sh
+npm i
+```
+
+It will install all package and dependency need for your project. But it is not enough for run this project properly. You have to add a `.env` file in your root.
+And the structure of the environment file are given below:
+
+```env
+DB_USER="*********"
+DB_PASS="******"
+Access_Token_Secret=*************************
+```
+
+Here `DB_USER` & `DB_PASS` are the username and password of MongoDB database respectivly. And `Access_Token_Secret` are the security key for your JWT Token.
+
+If you setup this project in this way I think this project will run properly.
