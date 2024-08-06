@@ -4,8 +4,8 @@
 }
 
 .kzui-heading{ 
-  border: 1px solid red;
-  padding: 5px;
+  margin: 0 auto;
+  width: 100%;
   margin-bottom: 5px;
 }
 .kzui-heading h1{
@@ -22,12 +22,17 @@
 .kzui-select__control {
   display: flex;
   align-items: center;
-  padding: 8px;
-  border: 1px solid #ccc;
+  border: 5px solid #F43F5E;
   border-radius: 4px;
   background-color: #fff;
   cursor: pointer;
   flex-wrap: wrap;
+  justify-items: center;
+  justify-content: center;
+  margin: 0 auto;
+  min-height: 38px;
+  width: 296px;
+  margin: 0 auto;
 }
 
 .kzui-select__value, .kzui-select__placeholder {
@@ -36,6 +41,7 @@
 
 .kzui-select__placeholder {
   color: #aaa;
+  text-align: center;
 }
 
 .kzui-select__clear-btn {
@@ -51,12 +57,15 @@
   top: 100%;
   left: 0;
   right: 0;
-  background-color: #fff;
-  border: 1px solid #ccc;
+  background-color: #F43F5E;
   border-radius: 4px;
   z-index: 10;
   margin-top: 10px;
   padding: 5px;
+  color: white;
+  width: 296px;
+  text-align: center;
+  margin: 0 auto;
 }
 
 .kzui-select__search{
@@ -87,16 +96,19 @@
   padding: 0;
   margin: 0;
   margin-top: 5px;
+  background-color: rgb(255 241 242);
 }
 
 .kzui-select__option {
   padding: 8px;
   cursor: pointer;
+  color: black;
 }
 
 .kzui-select__option:hover {
-  background-color: rgb(255 241 242);
-  color: rgb(244 63 94);  
+  background-color: rgb(244 63 94); 
+  color: rgb(255 241 242);
+  transition: all ease-in 0.2s;
 }
 
 .kzui-select__multi-value-container {
@@ -126,4 +138,51 @@
 .kzui-select__no-options {
   padding: 8px;
   color: #666;
+}
+
+
+/* ------------------------------------- */
+
+.container {
+  width: 393px;
+  height: 46px;
+  box-shadow: 16px 14px 20px #0000008c;
+  border-radius: 10px;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto;
+}
+.container::before {
+  content: "";
+  background-image: conic-gradient(#ff0052 20deg, transparent 120deg);
+  width: 2000%;
+  height: 2000%;
+  position: absolute;
+  animation: rotate 2s linear infinite;
+}
+.container::after {
+  content: "Select";
+  width: 380px;
+  height: 44px;
+  background: #101010;
+  position: absolute;
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #ff0052;
+  font-size: larger;
+  letter-spacing: 5px;
+  box-shadow: inset 20px 20px 20px #0000008c;
+}
+@keyframes rotate {
+  0%{
+      transform: rotate(0deg);
+  }
+  100%{
+      transform: rotate(-360deg);
+  }
 }

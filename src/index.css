@@ -3,9 +3,12 @@
 @tailwind components;
 @tailwind utilities;
 
+
+
 html {
   font-size: 0.88rem;
 }
 body {
   font-family: "Poppins", sans-serif;
+  background-color: #181818;
 }

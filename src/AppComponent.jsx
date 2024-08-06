@@ -35,7 +35,6 @@ const groupedOptions = [
 ];
 
 const AppComponent = () => {
-
   const handleSelectChange = (value) => {
     console.log("Selected value:", value);
   };
@@ -43,11 +42,10 @@ const AppComponent = () => {
     console.log("Search term:", searchTerm);
   };
 
-  
   return (
     <div>
       <div className="kzui-heading">
-        <h1>Custom Select Component</h1>
+        <div className="container"></div>
       </div>
       <CustomSelect
         isClearable
@@ -62,19 +60,6 @@ const AppComponent = () => {
         onMenuOpen={() => console.log("Menu opened")}
         onSearchHandler={handleSearch}
       />
-      {/* <CustomSelect
-        isClearable
-        isSearchable
-        isDisabled={false}
-        options={groupedOptions}
-        value={[]}
-        placeholder="Select an option"
-        isGrouped={true}
-        isMulti={true}
-        onChangeHandler={handleSelectChange}
-        onMenuOpen={() => console.log("Menu opened")}
-        onSearchHandler={handleSearch}
-      /> */}
     </div>
   );
 };
