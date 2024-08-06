@@ -4,6 +4,9 @@
 
 The `CustomSelect` component is a versatile and customizable select dropdown that supports single and multiple selections, searchable options, and grouped options. It follows the BEM (Block Element Modifier) naming convention and does not rely on any external CSS libraries or state management libraries.
 
+
+**Live Link: [https://customcomponent.netlify.app](https://customcomponent.netlify.app)**
+
 ## Props
 
 ### `isClearable`
