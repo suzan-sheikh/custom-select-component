@@ -3,19 +3,31 @@
   font-family: Arial, sans-serif;
 }
 
+.kzui-heading{ 
+  border: 1px solid red;
+  padding: 5px;
+  margin-bottom: 5px;
+}
+.kzui-heading h1{
+  font-size: 12px;
+  text-align: center;
+  padding: 0;
+  margin: 0;
+}
+
 .kzui-select--disabled {
   opacity: 0.5;
   pointer-events: none;
 }
-
 .kzui-select__control {
   display: flex;
   align-items: center;
-  justify-content: space-between;
   padding: 8px;
   border: 1px solid #ccc;
   border-radius: 4px;
   background-color: #fff;
+  cursor: pointer;
+  flex-wrap: wrap;
 }
 
 .kzui-select__value, .kzui-select__placeholder {
@@ -29,7 +41,7 @@
 .kzui-select__clear-btn {
   background: none;
   border: none;
-  color: #999;
+  color: #F43F5E;
   cursor: pointer;
   font-size: 16px;
 }
@@ -42,23 +54,39 @@
   background-color: #fff;
   border: 1px solid #ccc;
   border-radius: 4px;
-  max-height: 200px;
-  overflow-y: auto;
   z-index: 10;
+  margin-top: 10px;
+  padding: 5px;
 }
 
-.kzui-select__search {
+.kzui-select__search{
+  outline: none;
+  border: none;
+  background: none;
+  color: #F43F5E;  
+  font-size: 15px;
   width: 100%;
+}
+
+.kzui-select__search_icon{
+  color: #F43F5E;
+  font-size: 20px;
+}
+
+.kzui-select__search_container{
+  background-color: #130d0d;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   padding: 8px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  margin-bottom: 8px;
+  gap: 2px;
 }
 
 .kzui-select__list {
   list-style: none;
   padding: 0;
   margin: 0;
+  margin-top: 5px;
 }
 
 .kzui-select__option {
@@ -67,14 +95,16 @@
 }
 
 .kzui-select__option:hover {
-  background-color: #f0f0f0;
+  background-color: rgb(255 241 242);
+  color: rgb(244 63 94);  
 }
 
 .kzui-select__multi-value-container {
   display: flex;
   align-items: center;
-  background-color: #e0e0e0;
-  border-radius: 12px;
+  background-color: rgb(255 241 242);
+  color: rgb(244 63 94);
+  border-radius: 3px;
   padding: 4px 8px;
   margin: 2px;
 }

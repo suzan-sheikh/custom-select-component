@@ -4,6 +4,17 @@ const options = [
   { value: "1", label: "Main Option 1" },
   { value: "2", label: "Main Option 2" },
   { value: "3", label: "Main Option 3" },
+  { value: "4", label: "Main Option 4" },
+  { value: "5", label: "Main Option 5" },
+  { value: "6", label: "Main Option 6" },
+  { value: "7", label: "Main Option 7" },
+  { value: "8", label: "Main Option 8" },
+  { value: "9", label: "Main Option 9" },
+  { value: "10", label: "Main Option 10" },
+  { value: "11", label: "Main Option 11" },
+  { value: "12", label: "Main Option 12" },
+  { value: "13", label: "Main Option 13" },
+  { value: "14", label: "Main Option 14" },
 ];
 
 const groupedOptions = [
@@ -35,14 +46,16 @@ const AppComponent = () => {
   
   return (
     <div>
-      <h1>Custom Select Component</h1>
+      <div className="kzui-heading">
+        <h1>Custom Select Component</h1>
+      </div>
       <CustomSelect
         isClearable
         isSearchable
         isDisabled={false}
         options={options}
         value={null}
-        placeholder="Select an option"
+        placeholder="Select an option ↓"
         isGrouped={false}
         isMulti={true}
         onChangeHandler={handleSelectChange}

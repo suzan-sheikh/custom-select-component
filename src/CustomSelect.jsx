@@ -1,5 +1,6 @@
-import { useState, useEffect, useRef } from 'react';
-import './CustomSelect.css';
+import { useState, useEffect, useRef } from "react";
+import "./CustomSelect.css";
+import { IoSearchOutline } from "react-icons/io5";
 
 const CustomSelect = ({
   isClearable,
@@ -14,9 +15,11 @@ const CustomSelect = ({
   onMenuOpen,
   onSearchHandler,
 }) => {
-  const [selectedValue, setSelectedValue] = useState(value || (isMulti ? [] : null));
+  const [selectedValue, setSelectedValue] = useState(
+    value || (isMulti ? [] : null)
+  );
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [searchTerm, setSearchTerm] = useState('');
+  const [searchTerm, setSearchTerm] = useState("");
   const inputRef = useRef(null);
   const menuRef = useRef(null); // Reference to the menu container
   const controlRef = useRef(null); // Reference to the control container
@@ -24,14 +27,14 @@ const CustomSelect = ({
   // Toggle menu open/close
   const handleControlClick = () => {
     if (!isDisabled) {
-      setIsMenuOpen(prev => !prev);
+      setIsMenuOpen((prev) => !prev);
     }
   };
 
   // Handle option selection
   const handleSelect = (option) => {
     if (isMulti) {
-      setSelectedValue(prev => {
+      setSelectedValue((prev) => {
         const newSelection = [...prev, option];
         onChangeHandler(newSelection);
         return newSelection;
@@ -46,8 +49,8 @@ const CustomSelect = ({
   // Handle clear action
   const handleClear = (item) => {
     if (isMulti) {
-      setSelectedValue(prev => {
-        const newSelection = prev.filter(i => i.value !== item.value);
+      setSelectedValue((prev) => {
+        const newSelection = prev.filter((i) => i.value !== item.value);
         onChangeHandler(newSelection);
         return newSelection;
       });
@@ -65,43 +68,48 @@ const CustomSelect = ({
   };
 
   // Filter options based on search term and selected values
-  const filteredOptions = options.filter(option =>
-    option.label.toLowerCase().includes(searchTerm.toLowerCase()) &&
-    !selectedValue.some(sel => sel.value === option.value)
+  const filteredOptions = options.filter(
+    (option) =>
+      option.label.toLowerCase().includes(searchTerm.toLowerCase()) &&
+      !selectedValue.some((sel) => sel.value === option.value)
   );
 
   // Render options as list items
-  const renderOptions = (options) => options.map(option => (
-    <li
-      key={option.value}
-      className="kzui-select__option"
-      onClick={() => handleSelect(option)}
-    >
-      {option.label}
-    </li>
-  ));
+  const renderOptions = (options) =>
+    options.map((option) => (
+      <li
+        key={option.value}
+        className="kzui-select__option"
+        onClick={() => handleSelect(option)}
+      >
+        {option.label}
+      </li>
+    ));
 
   // Render grouped options
-  const renderGroupedOptions = () => options.map(group => (
-    <li key={group.label} className="kzui-select__group">
-      <div className="kzui-select__group-label">{group.label}</div>
-      <ul>
-        {renderOptions(group.options)}
-      </ul>
-    </li>
-  ));
+  const renderGroupedOptions = () =>
+    options.map((group) => (
+      <li key={group.label} className="kzui-select__group">
+        <div className="kzui-select__group-label">{group.label}</div>
+        <ul>{renderOptions(group.options)}</ul>
+      </li>
+    ));
 
   // Close menu when clicking outside
   useEffect(() => {
     const handleClickOutside = (event) => {
-      if (menuRef.current && !menuRef.current.contains(event.target) &&
-          controlRef.current && !controlRef.current.contains(event.target)) {
+      if (
+        menuRef.current &&
+        !menuRef.current.contains(event.target) &&
+        controlRef.current &&
+        !controlRef.current.contains(event.target)
+      ) {
         setIsMenuOpen(false);
       }
     };
 
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
   // Open/close menu and invoke onMenuOpen callback when menu opens/closes
@@ -110,16 +118,17 @@ const CustomSelect = ({
   }, [isMenuOpen, onMenuOpen]);
 
   return (
-    <div className={`kzui-select ${isDisabled ? 'kzui-select--disabled' : ''}`}>
+    <div className={`kzui-select ${isDisabled ? "kzui-select--disabled" : ""}`}>
       <div
         className="kzui-select__control"
         onClick={handleControlClick}
         ref={controlRef}
       >
-        {!selectedValue || (Array.isArray(selectedValue) && selectedValue.length === 0) ? (
+        {!selectedValue ||
+        (Array.isArray(selectedValue) && selectedValue.length === 0) ? (
           <div className="kzui-select__placeholder">{placeholder}</div>
         ) : isMulti ? (
-          selectedValue.map(val => (
+          selectedValue.map((val) => (
             <div key={val.value} className="kzui-select__multi-value-container">
               <span className="kzui-select__multi-value">{val.label}</span>
               {isClearable && (
@@ -139,7 +148,10 @@ const CustomSelect = ({
           <div className="kzui-select__value">{selectedValue.label}</div>
         )}
         {!isMulti && isClearable && selectedValue && (
-          <button className="kzui-select__clear-btn" onClick={() => handleClear(selectedValue)}>
+          <button
+            className="kzui-select__clear-btn"
+            onClick={() => handleClear(selectedValue)}
+          >
             &times;
           </button>
         )}
@@ -147,22 +159,26 @@ const CustomSelect = ({
       {isMenuOpen && (
         <div className="kzui-select__menu" ref={menuRef}>
           {isSearchable && (
-            <input
-              type="text"
-              className="kzui-select__search"
-              value={searchTerm}
-              onChange={handleSearch}
-              placeholder="Search..."
-              ref={inputRef}
-            />
+            <div className="kzui-select__search_container">
+              <IoSearchOutline className="kzui-select__search_icon" />
+              <input
+                type="text"
+                className="kzui-select__search"
+                value={searchTerm}
+                onChange={handleSearch}
+                placeholder="Search..."
+                ref={inputRef}
+              />
+            </div>
           )}
           <ul className="kzui-select__list">
-            {isGrouped
-              ? renderGroupedOptions()
-              : filteredOptions.length
-              ? renderOptions(filteredOptions)
-              : <li className="kzui-select__no-options">No options available</li>
-            }
+            {isGrouped ? (
+              renderGroupedOptions()
+            ) : filteredOptions.length ? (
+              renderOptions(filteredOptions)
+            ) : (
+              <li className="kzui-select__no-options">No options available</li>
+            )}
           </ul>
         </div>
       )}
