@@ -50,6 +50,15 @@ The `CustomSelect` component is a versatile and customizable select dropdown tha
 - **Type:** `(searchTerm: string) => void`
 - **Description:** Callback function that is called when the search input changes. It receives the search term as an argument.
 
+
+## Setup
+
+For initializing this project you have to use the command below:
+
+```sh
+npm i
+```
+
 ## Installation
 
 You can include the `CustomSelect` component in your project by copying the component code into your project and importing it into your application.
