@@ -1,28 +1,79 @@
+/*  ----------------- animation card area start ------------------ */
+/* main div area start */
+.container {
+  width: 300px;
+  height: 46px;
+  border-radius: 10px;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto;
+}
+/* main div area end */
+/* main div area before */
+.container::before {
+  content: "";
+  background-image: conic-gradient(#ff0052 20deg, transparent 120deg);
+  width: 2000%;
+  height: 2000%;
+  position: absolute;
+  animation: rotate 2s linear infinite;
+}
+/* main div area after */
+.container::after {
+  content: "WELCOME";
+  width: 290px;
+  height: 44px;
+  background: #101010;
+  position: absolute;
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #ff0052;
+  font-size: larger;
+  letter-spacing: 5px;
+  box-shadow: inset 20px 20px 20px #0000008c;
+}
+/* animation keyframes */
+@keyframes rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(-360deg);
+  }
+}
+/*  ----------------- animation card area end ------------------ */
+
+/* select area */
 .kzui-select {
   position: relative;
   font-family: Arial, sans-serif;
 }
-
-.kzui-heading{ 
+/* select heading area */
+.kzui-heading {
   margin: 0 auto;
   width: 100%;
   margin-bottom: 5px;
 }
-.kzui-heading h1{
+.kzui-heading h1 {
   font-size: 12px;
   text-align: center;
   padding: 0;
   margin: 0;
 }
-
-.kzui-select--disabled {
+/* select item disable */
+.kzui-select-disabled {
   opacity: 0.5;
   pointer-events: none;
 }
-.kzui-select__control {
+.kzui-select_control {
   display: flex;
   align-items: center;
-  border: 5px solid #F43F5E;
+  border: 5px solid #f43f5e;
   border-radius: 4px;
   background-color: #fff;
   cursor: pointer;
@@ -37,29 +88,34 @@
   padding-bottom: 10px;
 }
 
-.kzui-select__value, .kzui-select__placeholder {
+.kzui-select_value,
+.kzui-select_placeholder {
   flex: 1;
 }
 
-.kzui-select__placeholder {
+.kzui-select_placeholder {
   color: #aaa;
   text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 24px;
 }
 
-.kzui-select__clear-btn {
+.kzui-select_clear-btn {
   background: none;
   border: none;
-  color: #F43F5E;
+  color: #f43f5e;
   cursor: pointer;
   font-size: 16px;
 }
 
-.kzui-select__menu {
+.kzui-select_menu {
   position: absolute;
   top: 100%;
   left: 0;
   right: 0;
-  background-color: #F43F5E;
+  background-color: #f43f5e;
   border-radius: 4px;
   z-index: 10;
   margin-top: 10px;
@@ -70,21 +126,27 @@
   margin: 0 auto;
 }
 
-.kzui-select__search{
+.kzui-select_search {
   outline: none;
   border: none;
   background: none;
-  color: #F43F5E;  
+  color: #f43f5e;
   font-size: 15px;
   width: 100%;
 }
 
-.kzui-select__search_icon{
-  color: #F43F5E;
+.image{
+  width: 37px;
+}
+
+
+
+.kzui-select_search_icon {
+  color: #f43f5e;
   font-size: 20px;
 }
 
-.kzui-select__search_container{
+.kzui-select_search_container {
   background-color: #130d0d;
   display: flex;
   align-items: center;
@@ -93,7 +155,7 @@
   gap: 2px;
 }
 
-.kzui-select__list {
+.kzui-select_list {
   list-style: none;
   padding: 0;
   margin: 0;
@@ -102,7 +164,7 @@
   padding: 38px;
 }
 
-.kzui-select__option {
+.kzui-select_option {
   padding: 8px;
   cursor: pointer;
   color: black;
@@ -111,13 +173,13 @@
   margin-top: 10px;
 }
 
-.kzui-select__option:hover {
-  background-color: rgb(244 63 94); 
+.kzui-select_option:hover {
+  background-color: rgb(244 63 94);
   color: rgb(255 241 242);
   transition: all ease-in 0.2s;
 }
 
-.kzui-select__multi-value-container {
+.kzui-select_multi-value-container {
   display: flex;
   align-items: center;
   background-color: rgb(255 241 242);
@@ -127,7 +189,7 @@
   margin: 2px;
 }
 
-.kzui-select__multi-value {
+.kzui-select_multi-value {
   margin-right: 4px;
 }
 
@@ -135,60 +197,16 @@
   margin-bottom: 8px;
 }
 
-.kzui-select__group-label {
+.kzui-select_group-label {
   font-weight: bold;
   padding: 8px;
   border-bottom: 1px solid #ccc;
 }
 
-.kzui-select__no-options {
+.kzui-select_no-options {
   padding: 8px;
   color: #666;
 }
 
 
-/* ------------------------------------- */
-
-.container {
-  width: 393px;
-  height: 46px;
-  box-shadow: 16px 14px 20px #0000008c;
-  border-radius: 10px;
-  position: relative;
-  overflow: hidden;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: 0 auto;
-}
-.container::before {
-  content: "";
-  background-image: conic-gradient(#ff0052 20deg, transparent 120deg);
-  width: 2000%;
-  height: 2000%;
-  position: absolute;
-  animation: rotate 2s linear infinite;
-}
-.container::after {
-  content: "Select";
-  width: 380px;
-  height: 44px;
-  background: #101010;
-  position: absolute;
-  border-radius: 10px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: #ff0052;
-  font-size: larger;
-  letter-spacing: 5px;
-  box-shadow: inset 20px 20px 20px #0000008c;
-}
-@keyframes rotate {
-  0%{
-      transform: rotate(0deg);
-  }
-  100%{
-      transform: rotate(-360deg);
-  }
-}
+/* 💛💛💚💗Thank you very much sir for viewing my assignment💗💚💛💛 */

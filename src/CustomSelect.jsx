@@ -1,37 +1,35 @@
 import { useState, useEffect, useRef } from "react";
 import "./CustomSelect.css";
 import { IoSearchOutline } from "react-icons/io5";
+import PropTypes from 'prop-types';
+import icon from './assets/click.gif'
 
 const CustomSelect = ({
-  isClearable,
-  isSearchable,
-  isDisabled,
-  options,
-  value,
-  placeholder,
-  isGrouped,
-  isMulti,
-  onChangeHandler,
-  onMenuOpen,
-  onSearchHandler,
+
+  isClearable, isSearchable, isDisabled, options, value, placeholder, isGrouped, isMulti, onChangeHandler, onMenuOpen,onSearchHandler,
 }) => {
   const [selectedValue, setSelectedValue] = useState(
     value || (isMulti ? [] : null)
   );
+
+
+  // --------all state start
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const inputRef = useRef(null);
   const menuRef = useRef(null); // Reference to the menu container
   const controlRef = useRef(null); // Reference to the control container
+  // -------all state end
 
-  // Toggle menu open/close
+  // -------Toggle menu open/close start
   const handleControlClick = () => {
     if (!isDisabled) {
       setIsMenuOpen((prev) => !prev);
     }
   };
+// --------Toggle menu open/close end
 
-  // Handle option selection
+  // --------Handle option selection start
   const handleSelect = (option) => {
     if (isMulti) {
       setSelectedValue((prev) => {
@@ -45,8 +43,10 @@ const CustomSelect = ({
       setIsMenuOpen(false);
     }
   };
+  // ------Handle option selection end
 
-  // Handle clear action
+
+  // ------Handle clear action start
   const handleClear = (item) => {
     if (isMulti) {
       setSelectedValue((prev) => {
@@ -60,124 +60,102 @@ const CustomSelect = ({
     }
     setIsMenuOpen(true);
   };
+   // ------Handle clear action end
 
-  // Handle search input change
+
+  // ------Handle search input change start
   const handleSearch = (event) => {
     setSearchTerm(event.target.value);
     if (onSearchHandler) onSearchHandler(event.target.value);
   };
+  // ------Handle search input change end
 
-  // Filter options based on search term and selected values
+
+  // -----Filter options based on search term and selected values start
   const filteredOptions = options.filter(
     (option) =>
       option.label.toLowerCase().includes(searchTerm.toLowerCase()) &&
       !selectedValue.some((sel) => sel.value === option.value)
   );
+  // -----Filter options based on search term and selected values end
 
-  // Render options as list items
+
+  // -----Render options as list items start
   const renderOptions = (options) =>
     options.map((option) => (
       <li
         key={option.value}
-        className="kzui-select__option"
+        className="kzui-select_option"
         onClick={() => handleSelect(option)}
       >
         {option.label}
       </li>
     ));
+  // -----Render options as list items end
 
-  // Render grouped options
+
+  // -----Render grouped options start
   const renderGroupedOptions = () =>
     options.map((group) => (
       <li key={group.label} className="kzui-select__group">
-        <div className="kzui-select__group-label">{group.label}</div>
+        <div className="kzui-select_group-label">{group.label}</div>
         <ul>{renderOptions(group.options)}</ul>
       </li>
     ));
+   // -----Render grouped options end
 
-  // Close menu when clicking outside
+
+  // -----Close menu when clicking outside start
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (
-        menuRef.current &&
-        !menuRef.current.contains(event.target) &&
-        controlRef.current &&
-        !controlRef.current.contains(event.target)
-      ) {
+        menuRef.current && !menuRef.current.contains(event.target) && controlRef.current && !controlRef.current.contains(event.target)) {
         setIsMenuOpen(false);
       }
     };
-
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
+  // -----Close menu when clicking outside end
 
-  // Open/close menu and invoke onMenuOpen callback when menu opens/closes
+
+  // -----Open/close menu and invoke onMenuOpen callback when menu opens/closes start
   useEffect(() => {
     if (onMenuOpen && isMenuOpen) onMenuOpen();
   }, [isMenuOpen, onMenuOpen]);
 
   return (
-    <div className={`kzui-select ${isDisabled ? "kzui-select--disabled" : ""}`}>
-      <div
-        className="kzui-select__control"
-        onClick={handleControlClick}
-        ref={controlRef}
-      >
-        {!selectedValue ||
-        (Array.isArray(selectedValue) && selectedValue.length === 0) ? (
-          <div className="kzui-select__placeholder">{placeholder}</div>
-        ) : isMulti ? (
-          selectedValue.map((val) => (
-            <div key={val.value} className="kzui-select__multi-value-container">
-              <span className="kzui-select__multi-value">{val.label}</span>
-              {isClearable && (
-                <button
-                  className="kzui-select__clear-btn"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    handleClear(val);
-                  }}
-                >
-                  &times;
-                </button>
-              )}
+    <div className={`kzui-select ${isDisabled ? "kzui-select-disabled" : ""}`}>
+      <div className="kzui-select_control" onClick={handleControlClick} ref={controlRef}>
+        {!selectedValue || (Array.isArray(selectedValue) && selectedValue.length === 0) ? (
+          <div className="kzui-select_placeholder">{placeholder} <img className="image" src={icon} alt="icon image" /> </div>
+        ) : isMulti ? (selectedValue.map((val) => (
+            <div key={val.value} className="kzui-select_multi-value-container">
+              <span className="kzui-select_multi-value">{val.label}</span>
+              {isClearable && (<button className="kzui-select_clear-btn" onClick={(e) => { e.stopPropagation(); handleClear(val);}}> &times; </button>)}
             </div>
           ))
         ) : (
-          <div className="kzui-select__value">{selectedValue.label}</div>
+          <div className="kzui-select_value">{selectedValue.label}</div>
         )}
-        {!isMulti && isClearable && selectedValue && (
-          <button
-            className="kzui-select__clear-btn"
-            onClick={() => handleClear(selectedValue)}
-          >
-            &times;
-          </button>
+        {!isMulti && isClearable && selectedValue && (<button className="kzui-select_clear-btn" onClick={() => handleClear(selectedValue)}>&times;</button>
         )}
       </div>
       {isMenuOpen && (
-        <div className="kzui-select__menu" ref={menuRef}>
+        <div className="kzui-select_menu" ref={menuRef}>
           {isSearchable && (
-            <div className="kzui-select__search_container">
-              <IoSearchOutline className="kzui-select__search_icon" />
-              <input
-                type="text"
-                className="kzui-select__search"
-                value={searchTerm}
-                onChange={handleSearch}
-                placeholder="Search..."
-                ref={inputRef}
-              />
+            <div className="kzui-select_search_container">
+              <IoSearchOutline className="kzui-select_search_icon" />
+              <input type="text" className="kzui-select_search" value={searchTerm} onChange={handleSearch} placeholder="Search..." ref={inputRef}/>
             </div>
           )}
-          <ul className="kzui-select__list">
+          <ul className="kzui-select_list">
             {isGrouped ? (
               renderGroupedOptions()
             ) : filteredOptions.length ? (
               renderOptions(filteredOptions)
             ) : (
-              <li className="kzui-select__no-options">No options available</li>
+              <li className="kzui-select_no-options">No options available</li>
             )}
           </ul>
         </div>
@@ -185,5 +163,20 @@ const CustomSelect = ({
     </div>
   );
 };
-
+// -----Open/close menu and invoke onMenuOpen callback when menu opens/closes end
+// ---- prop validation start
+CustomSelect.propTypes = {
+  isClearable: PropTypes.bool,
+  isSearchable: PropTypes.bool,
+  isDisabled: PropTypes.bool,
+  options: PropTypes.array,
+  value: PropTypes.string,
+  placeholder: PropTypes.string,
+  isGrouped: PropTypes.bool,
+  isMulti: PropTypes.bool,
+  onChangeHandler: PropTypes.func,
+  onMenuOpen: PropTypes.func,
+  onSearchHandler: PropTypes.string
+}
+// ---- prop validation end
 export default CustomSelect;
